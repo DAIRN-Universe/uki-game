@@ -18,6 +18,7 @@ run_godot() {
 run_godot import --editor --import
 run_godot core --script tests/test_core.gd
 run_godot game --script tests/test_game.gd
+run_godot title --script tests/test_title.gd -- --seed=42
 run_godot meta --script tests/test_meta_adapter.gd
 run_godot smoke --quit-after 10
 python3 -m unittest discover -s tests -p 'test_*.py' -v

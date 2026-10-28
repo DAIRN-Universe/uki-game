@@ -56,7 +56,7 @@ In a second terminal, start the game from the repository root:
 UKI_META_PROXY_URL=http://127.0.0.1:8787/steppe godot --path . -- --seed=42
 ```
 
-The game considers proposals before enabling player input. Each client attempt has a default 25-second timeout and 64 KiB response limit, with at most two attempts. The proxy uses a 20-second upstream request timeout. Rejected or unavailable proposals cause deterministic offline generation with the requested seed.
+After **DAIRN PRESENT**, select **PLAY** on the **UKI** title screen. The game then considers proposals before enabling exploration input. Each client attempt has a default 25-second timeout and 64 KiB response limit, with at most two attempts. The proxy uses a 20-second upstream request timeout. Rejected or unavailable proposals cause deterministic offline generation with the requested seed.
 
 To run offline explicitly, without using a previously configured proxy variable:
 

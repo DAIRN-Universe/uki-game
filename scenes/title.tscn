@@ -1,0 +1,100 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/title.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="ButtonNormal"]
+bg_color = Color(0.1882353, 0.2117647, 0.2196078, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7882353, 0.7450981, 0.5686275, 1)
+
+[sub_resource type="StyleBoxFlat" id="ButtonHover"]
+bg_color = Color(0.5764706, 0.5529412, 0.4941176, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7882353, 0.7450981, 0.5686275, 1)
+
+[sub_resource type="StyleBoxFlat" id="ButtonFocus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.5137255, 0.7450981, 0.8156863, 1)
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.1882353, 0.2117647, 0.2196078, 1)
+
+[node name="Studio" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.7882353, 0.7450981, 0.5686275, 1)
+theme_override_font_sizes/font_size = 44
+text = "DAIRN PRESENT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Menu" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -130.0
+offset_right = 300.0
+offset_bottom = 130.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 36
+alignment = 1
+
+[node name="Title" type="Label" parent="Menu"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7882353, 0.7450981, 0.5686275, 1)
+theme_override_font_sizes/font_size = 112
+text = "UKI"
+horizontal_alignment = 1
+
+[node name="Play" type="Button" parent="Menu"]
+custom_minimum_size = Vector2(260, 68)
+layout_mode = 2
+size_flags_horizontal = 4
+disabled = true
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.7882353, 0.7450981, 0.5686275, 1)
+theme_override_colors/font_hover_color = Color(0.1882353, 0.2117647, 0.2196078, 1)
+theme_override_colors/font_pressed_color = Color(0.1882353, 0.2117647, 0.2196078, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/disabled = SubResource("ButtonNormal")
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/pressed = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "PLAY"

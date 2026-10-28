@@ -6,7 +6,7 @@ This implementation follows [Issue #1](https://github.com/DAIRN-Universe/uki-gam
 
 ## Run
 
-Install the standard **Godot 4** editor (GDScript, no .NET required). Validated with **Godot 4.7.2 stable** on Linux; other 4.x releases have not been verified. Open `project.godot` and press **F6** on `scenes/main.tscn`, or **F5** for the main project.
+Install the standard **Godot 4** editor (GDScript, no .NET required). Validated with **Godot 4.7.2 stable** on Linux; other 4.x releases have not been verified. Open `project.godot` and press **F5**. Startup shows **DAIRN PRESENT**, then **UKI** with a **PLAY** button. Click PLAY or press Enter/Space to open the game. For direct gameplay testing, press **F6** on `scenes/main.tscn`.
 
 ```sh
 godot --path . --editor --import
@@ -58,7 +58,7 @@ Requirements: Godot 4 editor binary, Python 3, Bash, and `rg` (ripgrep). Mock HT
 GODOT_BIN=godot tools/check.sh
 ```
 
-This imports the project, runs deterministic tests, scene tests, mock HTTP integration tests, a startup smoke check, and Python proxy tests. It fails on Godot errors even if the editor exits with status zero. No credentials or external API calls are used. The same checks are configured in `.github/workflows/checks.yml`.
+This imports the project, runs deterministic tests, gameplay and title-screen tests, mock HTTP integration tests, a startup smoke check, and Python proxy tests. It fails on Godot errors even if the editor exits with status zero. No credentials or external API calls are used. The same checks are configured in `.github/workflows/checks.yml`.
 
 For a displayed scene test and a viewport capture at `/tmp/uki-game-play.png`:
 

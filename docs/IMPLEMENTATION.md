@@ -13,6 +13,12 @@ Specification: [UKI-META-MVP-01](https://github.com/DAIRN-Universe/uki-game/issu
 5. Expanded regression coverage, documented setup/controls/architecture, preserved the canonical manifesto with its required link change, and added a repeatable check script and CI configuration.
 6. Applied the subsequently approved closed boundary: all 60 boundary cells are mountain or sea, and only the two unreachable axial corners are excluded from victory. Updated generation, deterministic validation, shared victory rules, Meta context/schema documentation, and regression tests. The reveal radius remains one.
 
+## Startup presentation
+
+A subsequent human request adds a presentation sequence: **DAIRN PRESENT** fades in, holds, and fades out, followed by **UKI** and a **PLAY** button. The button supports mouse activation and focused keyboard activation (Enter/Space). Gameplay generation and optional Meta requests begin only after PLAY. Command-line seed arguments survive the scene change. The title uses native Godot text and flat colors; no generated assets or new gameplay rules are introduced.
+
+The project now opens `scenes/title.tscn`; `scenes/main.tscn` remains the gameplay scene and can be run directly for testing. The presentation script is `scripts/game/title.gd`, and regression checks are in `tests/test_title.gd`.
+
 ## Rule interpretations
 
 Issue #1 fixes dimensions, terrain colors, maximum flight range, impassability, and the reveal-based victory goal. For details without an explicit value, the implementation chooses:
@@ -47,6 +53,8 @@ Environment: Linux x86_64, **Godot 4.7.2 stable** (`ed1daf0bf`), compatibility r
 | `GODOT_BIN=<Godot 4.7.2> tools/check.sh` | Pass; imports project, runs all suites and startup smoke check; rejects engine/parser errors even with a zero editor exit status. |
 | `godot --headless --path . --editor --import` | Pass; global classes and scene import without script errors. |
 | `godot --headless --path . --script tests/test_core.gd` | **7,797 checks, 0 failures**, including sealed boundaries across 64 seeds, rejection of steppe/river on each of the 60 boundary cells, impassable boundary movement checks, and proof that each of the 254 non-exempt cells is necessary for victory. |
+| `godot --headless --path . --script tests/test_title.gd -- --seed=42` | **15 checks, 0 failures**: studio intro sequence, menu readiness, focused keyboard PLAY activation, scene transition, preserved seed, and initial gameplay discovery. |
+| `godot --path . --audio-driver Dummy --script tests/test_title.gd -- --seed=42` | **17 checks, 0 failures**, including studio and menu viewport captures; both frames inspected visually. |
 | `godot --headless --path . --script tests/test_game.gd` | **15 checks, 0 failures**. |
 | `godot --path . --audio-driver Dummy --script tests/test_game.gd` | **17 checks, 0 failures**, including real viewport capture and exact rendered center colors. |
 | `godot --headless --path . --script tests/test_meta_adapter.gd` | **11 checks, 0 failures**: valid acceptance, invalid-then-valid retry, open-boundary/malformed/schema/wrong-seed rejection, HTTP failure, oversized body, timeout, unapproved URL, disconnected endpoint. |
@@ -70,10 +78,10 @@ The pixel test was corrected to include Godot's viewport stretch transform when 
 
 ## Files added or updated
 
-- `project.godot`, `scenes/main.tscn`: runnable Godot project/main scene.
+- `project.godot`, `scenes/title.tscn`, `scenes/main.tscn`: runnable Godot project, startup presentation, and gameplay scene.
 - `scripts/core/{hex_grid,steppe_rules,exploration_state,steppe_generator,steppe_validator,meta_steppe_adapter}.gd`: deterministic engine and optional proposal adapter.
-- `scripts/game/{main,uki}.gd`: playable scene and temporary owl placeholder.
-- `tests/{test_core,test_game,test_meta_adapter}.gd`, `tests/test_meta_proxy.py`: automated verification. Godot-generated `.gd.uid` companions accompany the GDScript files.
+- `scripts/game/{main,uki,title}.gd`: playable scene and temporary owl placeholder.
+- `tests/{test_core,test_game,test_title,test_meta_adapter}.gd`, `tests/test_meta_proxy.py`: automated verification. Godot-generated `.gd.uid` companions accompany the GDScript files.
 - `server/meta_proxy.py`: separate Meta-only credential-holding service.
 - `docs/steppe-request.schema.json`, `docs/steppe-proposal.schema.json`: versioned contracts.
 - `README.md`, `MANIFESTO.md`, `docs/IMPLEMENTATION.md`, `docs/DEPLOYMENT.md`: setup, canonical principles, architecture, deployment instructions, results, and review limitations.
