@@ -31,7 +31,8 @@ func run() -> void:
 		check(root.get_texture().get_image().save_png("/tmp/uki-studio-screen.png") == OK, "studio viewport capture")
 	await create_timer(1.8).timeout
 	check(not title.studio.visible and title.menu.visible, "studio transitions to game title")
-	check(title.get_node("Menu/Title").text == "UKI", "game title text")
+	var logo: TextureRect = title.get_node("Menu/LogoRow/Logo")
+	check(logo.texture != null and logo.texture.resource_path == "res://assets/branding/uki-kirpi-logo.svg", "branding logo appears above PLAY")
 	check(title.play.text == "PLAY" and not title.play.disabled, "PLAY enabled after fade")
 	check(title.play.has_focus(), "keyboard focus on PLAY")
 	if DisplayServer.get_name() != "headless":
