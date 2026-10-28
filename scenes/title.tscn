@@ -98,3 +98,11 @@ theme_override_styles/hover = SubResource("ButtonHover")
 theme_override_styles/pressed = SubResource("ButtonHover")
 theme_override_styles/focus = SubResource("ButtonFocus")
 text = "PLAY"
+
+[node name="Credits" type="Label" parent="Menu"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.7882353, 0.7450981, 0.5686275, 1)
+theme_override_font_sizes/font_size = 16
+text = "© 2026 ANDREY SVIININYKH\nLicensed under the MIT License"
+horizontal_alignment = 1

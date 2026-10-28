@@ -15,7 +15,7 @@ Specification: [UKI-META-MVP-01](https://github.com/DAIRN-Universe/uki-game/issu
 
 ## Startup presentation
 
-A subsequent human request adds a presentation sequence: **DAIRN PRESENT** fades in, holds, and fades out, followed by **UKI** and a **PLAY** button. The button supports mouse activation and focused keyboard activation (Enter/Space). Gameplay generation and optional Meta requests begin only after PLAY. Command-line seed arguments survive the scene change. The title uses native Godot text and flat colors; no generated assets or new gameplay rules are introduced.
+A subsequent human request adds a presentation sequence: **DAIRN PRESENT** fades in, holds, and fades out, followed by **UKI** and a **PLAY** button. The button supports mouse activation and focused keyboard activation (Enter/Space). Gameplay generation and optional Meta requests begin only after PLAY. Command-line seed arguments survive the scene change. The PLAY screen displays `© 2026 ANDREY SVIININYKH` and `Licensed under the MIT License` below the button. The title uses native Godot text and flat colors; no generated assets or new gameplay rules are introduced.
 
 The project now opens `scenes/title.tscn`; `scenes/main.tscn` remains the gameplay scene and can be run directly for testing. The presentation script is `scripts/game/title.gd`, and regression checks are in `tests/test_title.gd`.
 
