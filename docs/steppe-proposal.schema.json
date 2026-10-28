@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DAIRN Steppe Proposal v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "seed",
+    "width",
+    "height",
+    "cells",
+    "start",
+    "rivers"
+  ],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": -2147483648,
+      "maximum": 2147483647
+    },
+    "width": {
+      "const": 16
+    },
+    "height": {
+      "const": 16
+    },
+    "cells": {
+      "type": "array",
+      "minItems": 256,
+      "maxItems": 256,
+      "items": {
+        "enum": [
+          "steppe",
+          "mountain",
+          "river",
+          "sea"
+        ]
+      }
+    },
+    "start": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 15
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "rivers": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 256,
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 15
+          },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      }
+    }
+  },
+  "description": "All boundary coordinates (q=0, q=15, r=0, or r=15) must be mountain or sea. All cells except (0,0) and (15,15) must be revealable from reachable steppe under radius-one reveal and the implemented flight rules. These semantic constraints are enforced by SteppeValidator."
+}

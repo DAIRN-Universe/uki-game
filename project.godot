@@ -1,0 +1,17 @@
+; Uki & Kirpi — Issue #1 MVP
+config_version=5
+
+[application]
+config/name="Uki & Kirpi — Great Steppe"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+
+[display]
+window/size/viewport_width=1152
+window/size/viewport_height=768
+window/stretch/mode="canvas_items"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+textures/default_filters/use_nearest_mipmap_filter=false
+environment/defaults/default_clear_color=Color(0.1882353, 0.2117647, 0.2196078, 1)
