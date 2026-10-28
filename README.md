@@ -2,7 +2,7 @@
 
 **Uki & Kirpi — Adventures in the Great Steppe** is a top-down hex-grid exploration and puzzle adventure set in the **DAIRN: GREAT STEPPE** universe. Follow Uki, an owl who keeps a library in a lone steppe pine, and Kirpi, a curious hedgehog, as they discover winding rivers, mountain ranges, hidden treasures, and unexpected challenges. Procedurally generated geography and AI-assisted content make each journey different. The first Meta AI Hackathon MVP focuses on Uki exploring a small, continuous, hidden steppe in Godot 4; Kirpi, stone puzzles, and gold nuggets are planned for later iterations.
 
-This implementation follows [Issue #1](https://github.com/DAIRN-Universe/uki-game/issues/1). Only Uki exploration is implemented. Human defines. AI implements. Tests verify. Human decides. Implementation is pending human review and acceptance.
+This implementation follows [Issue #1](https://github.com/DAIRN-Universe/uki-game/issues/1). Only Uki exploration is implemented. Human defines. AI implements. Tests verify. Human decides. The human completed a manual playthrough and review and approved publication. CI and issue completion are tracked in Issue #1.
 
 ## Run
 
@@ -66,7 +66,7 @@ For a displayed scene test and a viewport capture at `/tmp/uki-game-play.png`:
 godot --path . --audio-driver Dummy --script tests/test_game.gd
 ```
 
-See [implementation and verification](docs/IMPLEMENTATION.md) for recorded results, acceptance evidence, and limitations. Human playtesting and review remain required before acceptance. Linux packaging instructions and deployment limitations are maintained in the [deployment guide](docs/DEPLOYMENT.md).
+See [implementation and verification](docs/IMPLEMENTATION.md) for recorded results, acceptance evidence, and limitations. The human has confirmed a completed manual playthrough and review; publication and CI evidence are tracked in Issue #1. Linux packaging instructions and deployment limitations are maintained in the [deployment guide](docs/DEPLOYMENT.md).
 
 ## DAIRN Technology Manifesto
 

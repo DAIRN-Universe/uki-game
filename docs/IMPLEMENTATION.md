@@ -2,7 +2,7 @@
 
 Specification: [UKI-META-MVP-01](https://github.com/DAIRN-Universe/uki-game/issues/1), read on 2026-10-28, including its manifesto and README requirements. The repository initially contained `LICENSE` and an untracked canonical `MANIFESTO.md`; no game code or tests existed. Existing IDE files were left alone and excluded with `.gitignore`.
 
-**Status: implemented for review; not human-accepted or merged.** Automated checks and a rendered-scene inspection provide the evidence below. Live Meta Muse Spark generation and deterministic acceptance were verified on 2026-10-29. Executable packaging and a human playthrough remain unverified. The former Llama endpoint returned HTTP 401; the human-approved Muse Spark migration subsequently produced a valid world.
+**Status: human-reviewed and manually playtested.** The human confirmed successful completion of the game and review of the victory banner, then explicitly approved publication, CI verification, and completion of Issue #1. Automated checks and rendered-scene inspections provide the evidence below. Live Meta Muse Spark generation and deterministic acceptance were verified on 2026-10-29. Executable packaging remains unverified; publication and CI evidence are recorded in Issue #1. The former Llama endpoint returned HTTP 401; the human-approved Muse Spark migration subsequently produced a valid world.
 
 ## Implementation sequence
 
@@ -71,13 +71,13 @@ Environment: Linux x86_64, **Godot 4.7.2 stable** (`ed1daf0bf`), compatibility r
 
 The generator intentionally logs and retries candidates whose meandering river or projections make a cell unrevealable. Expected warnings also appear for deliberately invalid mock Meta responses. These are exercised rejection paths, not failed tests. In this sandbox, display and socket tests required broader execution access; redirected XDG paths kept engine data under `/tmp`.
 
-The pixel test was corrected to include Godot's viewport stretch transform when sampling a resized window. It then passed; the actual palette values were unchanged. `.github/workflows/checks.yml` configures the offline suite with a checksum-pinned official engine archive; the remote GitHub Actions workflow has not been executed during this task.
+The pixel test was corrected to include Godot's viewport stretch transform when sampling a resized window. It then passed; the actual palette values were unchanged. `.github/workflows/checks.yml` configures the offline suite with a checksum-pinned official engine archive; remote GitHub Actions results are tracked in Issue #1 as part of publication.
 
 ## Live Muse verification — 2026-10-29
 
 A real request through the user's running local proxy returned **HTTP 200** after **26.17 seconds** for request `{ "version": 1, "seed": 42, "attempt": 0 }`. The proposal contained 256 terrain cells. It was passed directly to `SteppeValidator.validate(proposal, 42)` in Godot 4.7.2; the validator returned no errors.
 
-A traversal using only `ExplorationState.move_to(..., true)` and legal destinations then completed **340 movement steps**, including backtracking. It discovered **254 required cells** and set **victory to true**. No terrain, position, or discovery data was edited to force the result. The two exempt corners remained excluded under the approved boundary rule. This verifies real model access, proposal parsing, deterministic geography/reachability acceptance, and exploration completion at the engine-state level; it does not claim a manual UI playthrough or acceptance of every future AI proposal.
+A traversal using only `ExplorationState.move_to(..., true)` and legal destinations then completed **340 movement steps**, including backtracking. It discovered **254 required cells** and set **victory to true**. No terrain, position, or discovery data was edited to force the result. The two exempt corners remained excluded under the approved boundary rule. This verifies real model access, proposal parsing, deterministic geography/reachability acceptance, and exploration completion at the engine-state level; this engine-state evidence is separate from the later human-confirmed manual UI playthrough and does not imply acceptance of every future AI proposal.
 
 The API key stayed in the proxy environment and was not printed or copied into the repository. The generated proposal and temporary validation runner remained under `/tmp`, outside the repository.
 
@@ -87,8 +87,8 @@ The API key stayed in the proxy environment and was not printed or copied into t
 - The optional proxy is a loopback development service, not a public hosted service. Public hosting/authentication are outside this MVP. See [DEPLOYMENT.md](DEPLOYMENT.md) for local startup and a private SSH-tunnel deployment procedure; the remote procedure remains unverified. The game accepts only its two documented localhost URLs. Server-to-Meta calls have a 60-second timeout; client attempts have a default 65-second timeout, at most two attempts. The timeout regression test shortens the client timeout against a fake stalled server.
 - Reproduction from seed is guaranteed for the deterministic generator with the same implementation and Godot version. A live AI proposal may vary for the same seed. No model output changes action rules or an active exploration session.
 - The geography family uses narrow mountain/sea projections and meandering rivers. Narrowness allows every required terrain tile to be revealed under the one-hex radius; the two approved corner exceptions remain fogged. No claims are made about terrain diversity beyond this MVP.
-- Only Godot 4.7.2 on Linux was validated. Matching export templates and an actual executable build, other platforms/engine versions, and extended manual usability playtesting remain unverified.
-- Human review must confirm the rule interpretations and gameplay feel before acceptance. A local commit records the implementation for review; it does not mark the work accepted. Pushing, merging, and closing Issue #1 remain separate actions.
+- Only Godot 4.7.2 on Linux was validated. Matching export templates and an actual executable build, other platforms/engine versions, remain unverified. The human confirmed a completed manual playthrough and review of the current Linux/Godot game.
+- The human confirmed the completed playthrough, reviewed the visible changes, and explicitly authorized pushing the commits, verifying CI, updating Issue #1, and closing it after successful verification. No merge is required for the current linear history on `main`. See Issue #1 for the final publication and CI outcome.
 
 ## Files added or updated
 

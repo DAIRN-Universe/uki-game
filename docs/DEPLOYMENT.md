@@ -23,7 +23,7 @@ uki-game/
 
 Deploy both files together. The server loads the schema at startup using its own file location. A full source checkout also works. The game export excludes `server/` and `docs/`, so an exported game does not contain the proxy deployment files.
 
-Do not copy credentials into the project or game distribution. Review and acceptance of the implementation remain human decisions; these instructions do not imply the current working tree has been published or accepted.
+Do not copy credentials into the project or game distribution. Review and acceptance remain human decisions. The human confirmed a manual playthrough and approved publication; see Issue #1 for the publication and CI record.
 
 ## Configuration
 
@@ -194,7 +194,7 @@ The export preset excludes server code, schemas/documentation, tests, tools, Git
 - **Update proxy code:** stop the proxy, replace both the proxy and matching schema from the reviewed revision, then restart. Repeat the HTTP transport check and an offline/game smoke check.
 - **Update the game:** replace the executable and its matching PCK together. Keep the previous reviewed pair if a rollback is needed.
 
-Proxy and game protocol versions must remain compatible with the version 1 request/proposal schemas. No remote deployment, process manager, automatic restart, or CI release publication is performed by the repository's current check workflow.
+Proxy and game protocol versions must remain compatible with the version 1 request/proposal schemas. The check workflow runs verification only; it does not perform remote deployment, install a process manager, configure automatic restart, or publish release binaries.
 
 ## Troubleshooting
 
