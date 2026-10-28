@@ -1,4 +1,14 @@
-# Uki & Kirpi — Adventures in the Great Steppe
+<p align="center">
+  <img
+    src="assets/branding/uki-kirpi-logo.png"
+    alt="Uki & Kirpi — Adventures in the Great Steppe"
+    width="480"
+  />
+</p>
+
+<h1 align="center">
+  Uki & Kirpi — Adventures in the Great Steppe
+</h1>
 
 A top-down hex-grid exploration adventure set in the **DAIRN: GREAT STEPPE** universe. Uki, an owl who keeps a library in a lone steppe pine, explores winding rivers, mountains, and unknown landscapes. Each journey features a procedurally generated steppe shaped by AI-assisted proposals and verified game rules.
 
