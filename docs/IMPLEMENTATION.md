@@ -2,7 +2,7 @@
 
 Specification: [UKI-META-MVP-01](https://github.com/DAIRN-Universe/uki-game/issues/1), read on 2026-10-28, including its manifesto and README requirements. The repository initially contained `LICENSE` and an untracked canonical `MANIFESTO.md`; no game code or tests existed. Existing IDE files were left alone and excluded with `.gitignore`.
 
-**Status: implemented for review; not human-accepted or merged.** Automated checks and a rendered-scene inspection provide the evidence below. Live Meta service access, executable packaging, and a human playthrough remain unverified.
+**Status: implemented for review; not human-accepted or merged.** Automated checks and a rendered-scene inspection provide the evidence below. Live Meta Muse Spark generation and deterministic acceptance were verified on 2026-10-29. Executable packaging and a human playthrough remain unverified. The former Llama endpoint returned HTTP 401; the human-approved Muse Spark migration subsequently produced a valid world.
 
 ## Implementation sequence
 
@@ -12,6 +12,12 @@ Specification: [UKI-META-MVP-01](https://github.com/DAIRN-Universe/uki-game/issu
 4. Replaced the offline proposal boundary with the optional Meta transport and separate credential-holding server. Added versioned JSON schemas, retry/fallback behavior, and mocked network tests.
 5. Expanded regression coverage, documented setup/controls/architecture, preserved the canonical manifesto with its required link change, and added a repeatable check script and CI configuration.
 6. Applied the subsequently approved closed boundary: all 60 boundary cells are mountain or sea, and only the two unreachable axial corners are excluded from victory. Updated generation, deterministic validation, shared victory rules, Meta context/schema documentation, and regression tests. The reveal radius remains one.
+
+## Human-approved AI model change
+
+The human explicitly approved replacing the original Issue #1 **Llama** model with **Meta Muse Spark** after the Llama endpoint rejected the supplied credential with HTTP 401. The proxy now calls `https://api.meta.ai/v1/chat/completions`, selects `muse-spark-1.3`, reads only `MODEL_API_KEY`, and parses `choices[0].message.content` according to the [official Meta protocol](https://dev.meta.ai/docs/protocols/chat-completions). Requests use a developer message, low reasoning effort, the model's default sampling, and strict JSON Schema structured output. Incomplete, refused, tool-call, or malformed replies are rejected before returning a proposal; the game still applies its complete deterministic validator.
+
+This is an approved change to the original issue's named model, not a third-party AI integration. The fixed Meta-only host/model policy, credential separation, client protocol, geography/movement rules, and offline fallback remain in place. Safe failure responses/logs report only fixed diagnostic codes and numeric HTTP status, without exception text, tokens, headers, or remote response bodies. Existing proxy processes must be restarted to load the change. An initial live Muse map request hit the former 20-second timeout; an unauthenticated endpoint probe returned HTTP 401 in 0.8 seconds. The operational budgets were therefore raised to 60 seconds upstream and 65 seconds in the client; a subsequent authenticated Muse generation succeeded in 26.17 seconds and passed deterministic validation.
 
 ## Startup presentation
 
@@ -42,7 +48,7 @@ The boundary and two-corner victory exception were explicitly approved by the hu
 | Fog, scrolling camera, exploration victory | Initial discovery is local; scene checks interpolation and following camera. Core test explores and backtracks a spanning tree using only `ExplorationState.move_to`, revealing all 254 required cells and triggering victory while the two exempt corners remain fogged. HUD exposes no dimensions or percentage; unknown lattice fills the viewport. |
 | Reject unsolvable geography | Validator performs BFS over actual legal flight destinations, unions actual reveal neighborhoods, and rejects incomplete coverage. A trapped-start regression fixture is rejected. |
 | Runs without credentials/API | Offline scene/startup tests pass with no API configuration. Game state and rules have no AI dependency. Missing server, HTTP failures, invalid outputs, oversized bodies, and timeouts trigger deterministic fallback. |
-| Meta-only AI calls | Server fixes Meta's endpoint and Meta Llama model, prevents redirects, and holds credentials outside the game. Mocked tests inspect outgoing URL/model/schema and verify redacted failures. Live Meta access has not been verified. |
+| Meta-only AI calls | Server fixes Meta's endpoint and Muse Spark model, prevents redirects, and holds credentials outside the game. Mocked tests inspect outgoing URL/model/schema and verify redacted failures. Live Muse generation returned HTTP 200 and its world passed the game validator and a legal traversal to victory on 2026-10-29. |
 
 ## Executed checks
 
@@ -58,7 +64,7 @@ Environment: Linux x86_64, **Godot 4.7.2 stable** (`ed1daf0bf`), compatibility r
 | `godot --headless --path . --script tests/test_game.gd` | **15 checks, 0 failures**. |
 | `godot --path . --audio-driver Dummy --script tests/test_game.gd` | **17 checks, 0 failures**, including real viewport capture and exact rendered center colors. |
 | `godot --headless --path . --script tests/test_meta_adapter.gd` | **11 checks, 0 failures**: valid acceptance, invalid-then-valid retry, open-boundary/malformed/schema/wrong-seed rejection, HTTP failure, oversized body, timeout, unapproved URL, disconnected endpoint. |
-| `python3 -m unittest discover -s tests -p 'test_*.py' -v` | **6 tests passed**: strict request boundary, no-key behavior, official Meta response shapes and outgoing routing/schema, malformed/oversized responses, redirect blocking, error redaction. |
+| `python3 -m unittest discover -s tests -p 'test_*.py' -v` | **9 tests passed**: strict request boundary, no-key behavior, Muse completion parsing, fixed Meta routing/model/schema, rejection of incomplete/refused/malformed replies, isolation from the former key variable, malformed/oversized responses, redirect blocking, error redaction, and fixed diagnostic categories for missing keys, HTTP failures, network failures, and malformed responses. |
 | `godot --headless --path . --quit-after 10` | Pass; no credentials required. |
 | `godot --headless --path . --export-pack Linux /tmp/uki-game.zip` | Pass; 21 archive entries inspected. No server, tests, docs, tools, GitHub configuration, or `.env` entries included. This checks resource packaging, not an executable export. |
 | Manifesto comparison | Exact canonical source content after only substituting its repository-specific `docs/PRE_EXISTING.md` target. |
@@ -67,10 +73,18 @@ The generator intentionally logs and retries candidates whose meandering river o
 
 The pixel test was corrected to include Godot's viewport stretch transform when sampling a resized window. It then passed; the actual palette values were unchanged. `.github/workflows/checks.yml` configures the offline suite with a checksum-pinned official engine archive; the remote GitHub Actions workflow has not been executed during this task.
 
+## Live Muse verification — 2026-10-29
+
+A real request through the user's running local proxy returned **HTTP 200** after **26.17 seconds** for request `{ "version": 1, "seed": 42, "attempt": 0 }`. The proposal contained 256 terrain cells. It was passed directly to `SteppeValidator.validate(proposal, 42)` in Godot 4.7.2; the validator returned no errors.
+
+A traversal using only `ExplorationState.move_to(..., true)` and legal destinations then completed **340 movement steps**, including backtracking. It discovered **254 required cells** and set **victory to true**. No terrain, position, or discovery data was edited to force the result. The two exempt corners remained excluded under the approved boundary rule. This verifies real model access, proposal parsing, deterministic geography/reachability acceptance, and exploration completion at the engine-state level; it does not claim a manual UI playthrough or acceptance of every future AI proposal.
+
+The API key stayed in the proxy environment and was not printed or copied into the repository. The generated proposal and temporary validation runner remained under `/tmp`, outside the repository.
+
 ## Remaining limitations and human review
 
-- **Live Meta calls are unverified**: no credentials were supplied or used. API account access, endpoint availability, and model access must be checked by a human with an authorized Meta account. The proxy uses the endpoint and `completion_message.content` format published in the [official Meta client](https://github.com/meta-llama/llama-api-python). Any failure preserves offline play via fallback.
-- The optional proxy is a loopback development service, not a public hosted service. Public hosting/authentication are outside this MVP. See [DEPLOYMENT.md](DEPLOYMENT.md) for local startup and a private SSH-tunnel deployment procedure; the remote procedure remains unverified. The game accepts only its two documented localhost URLs. Server-to-Meta calls have a 20-second timeout; client attempts have a default 25-second timeout, at most two attempts. The timeout regression test shortens the client timeout against a fake stalled server.
+- **Live verification is limited to one successful Muse world**: the former Llama endpoint returned HTTP 401; after the approved migration and timeout adjustment, a live seed-42 Muse proposal passed deterministic validation and a traversal to victory. Future proposals and other accounts/deployments still require validation. The implementation follows the [official Muse Chat Completions format](https://dev.meta.ai/docs/protocols/chat-completions). Any failure preserves offline play via fallback.
+- The optional proxy is a loopback development service, not a public hosted service. Public hosting/authentication are outside this MVP. See [DEPLOYMENT.md](DEPLOYMENT.md) for local startup and a private SSH-tunnel deployment procedure; the remote procedure remains unverified. The game accepts only its two documented localhost URLs. Server-to-Meta calls have a 60-second timeout; client attempts have a default 65-second timeout, at most two attempts. The timeout regression test shortens the client timeout against a fake stalled server.
 - Reproduction from seed is guaranteed for the deterministic generator with the same implementation and Godot version. A live AI proposal may vary for the same seed. No model output changes action rules or an active exploration session.
 - The geography family uses narrow mountain/sea projections and meandering rivers. Narrowness allows every required terrain tile to be revealed under the one-hex radius; the two approved corner exceptions remain fogged. No claims are made about terrain diversity beyond this MVP.
 - Only Godot 4.7.2 on Linux was validated. Matching export templates and an actual executable build, other platforms/engine versions, and extended manual usability playtesting remain unverified.

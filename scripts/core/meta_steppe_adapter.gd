@@ -3,7 +3,7 @@ extends Node
 ## Replaceable proposal boundary. Only the server knows Meta credentials.
 const MAX_ATTEMPTS := 2
 const PROXY_URLS := ["http://127.0.0.1:8787/steppe", "http://localhost:8787/steppe"]
-var request_timeout_seconds := 25.0
+var request_timeout_seconds := 65.0
 var attempts_used := 0
 var used_fallback := false
 

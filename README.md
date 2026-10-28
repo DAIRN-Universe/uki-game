@@ -36,19 +36,19 @@ Uki reveals the current hex and six neighbors on arrival. Discovery persists for
 - `scripts/core/exploration_state.gd`: authoritative world copy, position, discovered cells, and victory. No rendering or AI dependency.
 - `scripts/game/`: flat-color rendering with visible borders, temporary 32×32 owl placeholder, controls, interpolation, camera, and fog.
 - `scripts/core/meta_steppe_adapter.gd`: optional replaceable proposal source; deterministic validation precedes acceptance. It cannot define rules or mutate an active session.
-- `server/meta_proxy.py`: optional Python standard-library server, exclusively calling Meta's Llama API. It is separate from the client and excluded from the Linux export preset.
+- `server/meta_proxy.py`: optional Python standard-library server, exclusively calling Meta's Model API with Muse Spark. It is separate from the client and excluded from the Linux export preset.
 
 The one-hex reveal radius, steppe-only walking/landing, and conservative straight flight checks resolve details not otherwise specified by the issue. A subsequent human decision requires an impassable boundary and excludes only its two unreachable corners from victory; increasing the reveal radius is deferred to later work. No additional abilities or game systems are introduced.
 
-## Optional Meta Llama proposals
+## Optional Meta Muse Spark proposals
 
-The MVP uses **Meta technology only** for AI. The server has a fixed Meta endpoint and Meta Llama model; third-party AI providers are not integrated. The restriction belongs to this hackathon MVP; the proposal-source boundary is replaceable without changing rules, authored context, or state.
+The MVP uses **Meta technology only** for AI. A subsequent explicit human decision replaces the original Issue #1 Llama integration with **Meta Muse Spark**. The server has a fixed Meta endpoint and Muse Spark model; third-party AI providers are not integrated. The restriction belongs to this hackathon MVP; the proposal-source boundary is replaceable without changing rules, authored context, or state.
 
-See the [deployment guide](docs/DEPLOYMENT.md) for server setup, environment variables, local operation, private remote access, Linux game packaging, and troubleshooting. The current client accepts only the documented localhost proxy addresses. Live Meta endpoint/model access has not been verified.
+See the [deployment guide](docs/DEPLOYMENT.md) for server setup, environment variables, local operation, private remote access, Linux game packaging, and troubleshooting. The current client accepts only the documented localhost proxy addresses. A live Muse Spark proposal was received and accepted by the deterministic validator on 2026-10-29; a legal engine-state traversal reached victory. See the implementation report for the evidence and remaining limitations.
 
 The [request schema](docs/steppe-request.schema.json) and [proposal schema](docs/steppe-proposal.schema.json) are version 1. Terrain is a 256-entry row-major array indexed `r*16+q`; each river is an ordered list of axial `[q,r]` river tiles, first touching mountain and last touching sea. JSON Schema is only the structural contract; deterministic GDScript additionally enforces geography and exploration rules. The server prompt supplies authored DAIRN context and constraints.
 
-The adapter retries at most twice, with a 25-second timeout and 64 KiB response limit per attempt. Invalid JSON, invalid schema/geography, HTTP errors, oversized responses, missing credentials, and a stopped proxy all lead to the seeded offline fallback. Failure logs contain deterministic diagnostics, not remote response text or credentials. Meta is consulted only before input is enabled. Offline maps are seed-reproducible; live model output is a proposal and is not guaranteed to reproduce from a seed.
+The adapter retries at most twice, with a 65-second timeout and 64 KiB response limit per attempt. Invalid JSON, invalid schema/geography, HTTP errors, oversized responses, missing credentials, and a stopped proxy all lead to the seeded offline fallback. Failure logs contain deterministic diagnostics, not remote response text or credentials. Meta is consulted only before input is enabled. Offline maps are seed-reproducible; live model output is a proposal and is not guaranteed to reproduce from a seed.
 
 ## Checks
 

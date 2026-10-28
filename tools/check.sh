@@ -2,7 +2,7 @@
 set -euo pipefail
 repo_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$repo_dir"
-unset UKI_META_PROXY_URL LLAMA_API_KEY
+unset UKI_META_PROXY_URL MODEL_API_KEY LLAMA_API_KEY
 godot_bin="${GODOT_BIN:-godot}"
 check_logs="$(mktemp -d)"
 trap 'rm -rf "$check_logs"' EXIT

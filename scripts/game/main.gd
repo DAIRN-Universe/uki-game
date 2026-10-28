@@ -38,7 +38,7 @@ func _ready() -> void:
 	if not proxy_url.is_empty():
 		set_process_unhandled_input(false)
 		set_process(false)
-		message = "Considering a Meta Llama proposal…"
+		message = "Considering a Meta Muse Spark proposal…"
 		_update_hud()
 		var adapter := MetaSteppeAdapter.new()
 		add_child(adapter)
