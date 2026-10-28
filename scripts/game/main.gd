@@ -3,6 +3,7 @@ var state: ExplorationState
 var uki: Node2D
 var camera: Camera2D
 var hud: Label
+var victory_banner: Label
 var flight_mode := false
 var moving := false
 var world_seed := 2026
@@ -31,6 +32,17 @@ func _ready() -> void:
 	hud = Label.new()
 	hud.add_theme_constant_override("outline_size", 2)
 	panel.add_child(hud)
+	victory_banner = Label.new()
+	victory_banner.text = "Congratulation!!!"
+	victory_banner.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	victory_banner.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	victory_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	victory_banner.add_theme_font_size_override("font_size", 44)
+	victory_banner.add_theme_color_override("font_color", SteppeRules.PALETTE.steppe)
+	victory_banner.add_theme_color_override("font_outline_color", SteppeRules.PALETTE.unexplored)
+	victory_banner.add_theme_constant_override("outline_size", 8)
+	canvas.add_child(victory_banner)
+	victory_banner.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_update_hud()
 	# Offline generation has already been validated. Meta proposals can only
 	# replace it before play, and must pass the identical validator.
@@ -89,6 +101,7 @@ func _attempt(destination: Vector2i, flight: bool) -> void:
 	_update_hud()
 
 func _update_hud() -> void:
+	victory_banner.visible = state.won
 	hud.text = "UKI · GREAT STEPPE\nQ W E / A S D: walk · Left click: adjacent hex\nRight click: fly · Space: toggle flight · Flight range: 3\n%s\n%s" % [
 		"Flight selected" if flight_mode else "Walking selected",
 		"Steppe explored — victory! You may keep roaming." if state.won else message]

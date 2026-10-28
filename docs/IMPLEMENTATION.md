@@ -35,7 +35,7 @@ Issue #1 fixes dimensions, terrain colors, maximum flight range, impassability, 
 - A subsequent explicit human decision requires every boundary cell to be mountain or sea. Reveal radius remains one. Only axial corners `(0,0)` and `(15,15)` are excluded from victory because their in-bounds neighbors all belong to the impassable rim. The other 254 cells, including the other two corners and visible rim terrain, remain required. These two excluded cells remain fogged; future visibility changes are deferred.
 - Discovery is persistent within a session. There is no save/load feature.
 
-The boundary and two-corner victory exception were explicitly approved by the human after the initial implementation. The approved palette and movement/reveal ranges are unchanged. No excluded gameplay or generated visual assets were added.
+The boundary and two-corner victory exception were explicitly approved by the human after the initial implementation. The approved palette and movement/reveal ranges are unchanged. Successful exploration displays the requested centered `Congratulation!!!` banner; it remains hidden until victory and does not block continued movement. No excluded gameplay or generated visual assets were added.
 
 ## Acceptance evidence
 
